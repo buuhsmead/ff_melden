@@ -16,7 +16,16 @@ metadata:
 spec:
   source:
     git:
-      uri: "https://github.com/buuhsmead/ff_melden"
+      uri: $GIT_URI
+      ref: $GIT_REF
   strategy:
     jenkinsPipelineStrategy:
       jenkinsfilePath: "Jenkinsfile"
+      env:
+        - name: APP_NAME
+          value: "ffmeldenbot"
+        - name: GIT_URI
+          value: "https://github.com/buuhsmead/ff_melden"
+        - name: GIT_REF
+          value: "master"
+

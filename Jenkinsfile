@@ -29,6 +29,17 @@ podTemplate(
             }
         }
 
+        stage("service account creation") {
+            echo "Create the secret"
+            openshift.withCluster( ) {
+                def secretYml = openshift.create(readFile('ffmeldenbot-secret.yml'))
+                echo "Created objects from YML file: ${secretYml.names()}"
+            }
+        }
+
+        // service account
+        // rolebinding
+
         stage('create s2i thingie') {
             openshift.withCluster( ) {
                 def models = openshift.process("openshift//s2i-spring-boot-camel-config", "-p", "APP_NAME=ffmeldenbot", "-p", "GIT_REPO=https://github.com/buuhsmead/ffmeldenbot", "-p", "GIT_REF=master", "-p", "SECRET_NAME=ffmeldenbot-config", "-p", "CONFIGMAP_NAME=ffmeldenbot-config")
