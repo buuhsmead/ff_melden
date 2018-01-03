@@ -40,7 +40,7 @@ podTemplate(
 
         stage("Build") {
             echo 'Building project'
-            sh "mvn install"
+           // sh "mvn install"
         } // stage Build
 
     } // node myJenkins
