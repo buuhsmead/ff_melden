@@ -15,7 +15,7 @@ podTemplate(
 
         stage("Build") {
             echo 'Building project'
-            sh "mvn package"
+            sh "mvn install"
         } // stage Build
 
     } // node myJenkins

@@ -24,12 +24,16 @@
         <fabric8.version>2.2.170.redhat-000019</fabric8.version>
         <!--<fabric8.version>3.0.8</fabric8.version>-->
 
-        <spring-boot.version>1.4.1.RELEASE</spring-boot.version>
+        <spring-boot.version>1.5.4.RELEASE</spring-boot.version>
 
         <!-- maven plugin versions -->
         <fabric8.maven.plugin.version>3.5.33</fabric8.maven.plugin.version>
         <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+
+  <fabric8.build.strategy>s2i</fabric8.build.strategy>
+        <fabric8.mode>openshift</fabric8.mode>
+
     </properties>
 
     <!-- Some dependency management -->
