@@ -15,21 +15,27 @@ podTemplate(
 
         stage("configMap creation") {
             echo "Create the configMap"
-            def configMapYml = openshift.create( readFile( 'ffmeldenbot-configmap.yml' ) )
-            echo "Created objects from YML file: ${configMapYml.names()}"
+            openshift.withCluster( ) {
+                def configMapYml = openshift.create(readFile('ffmeldenbot-configmap.yml'))
+                echo "Created objects from YML file: ${configMapYml.names()}"
+            }
         }
 
         stage("secret creation") {
             echo "Create the secret"
-            def secretYml = openshift.create( readFile( 'ffmeldenbot-secret.yml' ) )
-            echo "Created objects from YML file: ${secretYml.names()}"
+            openshift.withCluster( ) {
+                def secretYml = openshift.create(readFile('ffmeldenbot-secret.yml'))
+                echo "Created objects from YML file: ${secretYml.names()}"
+            }
         }
 
         stage('create s2i thingie') {
-            def models = openshift.process( "openshift//s2i-spring-boot-camel-config", "-p", "APP_NAME=ffmeldenbot", "-p", "GIT_REPO=https://github.com/buuhsmead/ffmeldenbot")
-            echo "Creating this template will instantiate ${models.size()} objects"
-            def created = openshift.create( models )
-            echo "The template instantiated: ${created}"
+            openshift.withCluster( ) {
+                def models = openshift.process("openshift//s2i-spring-boot-camel-config", "-p", "APP_NAME=ffmeldenbot", "-p", "GIT_REPO=https://github.com/buuhsmead/ffmeldenbot")
+                echo "Creating this template will instantiate ${models.size()} objects"
+                def created = openshift.create(models)
+                echo "The template instantiated: ${created}"
+            }
         }
 
         stage("Build") {
