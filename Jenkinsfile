@@ -31,7 +31,7 @@ podTemplate(
 
         stage('create s2i thingie') {
             openshift.withCluster( ) {
-                def models = openshift.process("openshift//s2i-spring-boot-camel-config", "-p", "APP_NAME=ffmeldenbot", "-p", "GIT_REPO=https://github.com/buuhsmead/ffmeldenbot")
+                def models = openshift.process("openshift//s2i-spring-boot-camel-config", "-p", "APP_NAME=ffmeldenbot", "-p", "GIT_REPO=https://github.com/buuhsmead/ffmeldenbot", "-p", "GIT_REF=master", "-p", "SECRET_NAME=ffmeldenbot-secret", "-p", "CONFIGMAP_NAME=ffmeldenbot-configmap")
                 echo "Creating this template will instantiate ${models.size()} objects"
                 def created = openshift.create(models)
                 echo "The template instantiated: ${created}"
